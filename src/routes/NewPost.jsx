@@ -13,21 +13,33 @@ const NewPost = () => {
   const navigate = useNavigate();
   
   // Gerenciando o estado dos inputs
+  const [imagemSerie, setImagemSerie] = useState();
   const [tituloSerie, setTituloSerie] = useState();
   const [temporadas, setTemporadas] =  useState()
   const [episodios, setEpisodios] = useState()
   const [sinopse, setSinopse] = useState()
+
+  // Função que atualiza o estado com o arquivo selecionado 
+  const estadoDaImagem = (e) => {
+    const file = e.target.value;
+    setImagemSerie(file);
+  };
   
-  // Função que dispara quando o formulário for enviado
+  /* função envia os dados do formulário para o servidor 
+  usando o dadosFetch.post método. */
   const createPost = async (e) => {
     // eliminando o carregamento na mesma página, ao dar o submit
     e.preventDefault();
+     
+    /*
+    Os dados do formulário são construídos usando FormData
+    para lidar com o upload do arquivo de imagem.
+    */ 
+    const serie = {imagemSerie, tituloSerie, temporadas, episodios, sinopse};   
     
-    // Criando um novo objeto serie
-    const serie = { tituloSerie, temporadas, episodios, sinopse };
-  
     try {
-      // usando o seriesFetch da chamada global de API e usando o método http "post"
+      /* O Content-Type cabeçalho está definido como 
+      multipart/form-datapara indicar um upload de arquivo. */
       await dadosFetch.post("/series", serie);
   
       // Redirecione após a criação do post (ou realiza qualquer outra ação desejada)
@@ -42,6 +54,18 @@ const NewPost = () => {
     <div className='new-post'>
       <h2>Cadastrar Série</h2>
       <form onSubmit={(e)=> createPost(e)}>
+        
+        <div className="form-control">
+          <label htmlFor="img">Imagem: </label>
+          <input type="file" 
+          name="imagemSerie"
+          id="imagemSerie"
+          accept="image/png, image/jpeg"
+          onChange={(e) => setImagemSerie(e.target.value)}
+
+          />
+          
+        </div>
         <div className='form-control'>
           <label htmlFor="tituloSerie">Título:</label>
           <input

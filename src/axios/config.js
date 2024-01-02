@@ -6,9 +6,10 @@ import axios from "axios";
 const dadosFetch= axios.create({
     baseURL: "https://localhost:7024",
     headers:{
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
     },
 
 });
+
 
 export default dadosFetch;

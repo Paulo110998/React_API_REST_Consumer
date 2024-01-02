@@ -1,9 +1,9 @@
 // Configuração global da chamada da API
-import seriesFetch from "../axios/config"
+import dadosFetch from "../axios/config"
 import { useState, useEffect } from "react"
 import { Link } from "react-router-dom"
 import "./Homepage.css"
-import dadosFetch from "../axios/config"
+
 
 const Homepage = () => {
   
@@ -77,9 +77,12 @@ const Homepage = () => {
         series.map((serie) => (
           <div className="serie" key={serie.id} >
             <br />
+            <img alt="" />
             <h2>{serie.tituloSerie}</h2>
             <p>Temporadas: {serie.temporadas}</p>
             <p>Cadas episódio tem {serie.episodios}min</p>
+            <p>{serie.id}</p>
+            <Link to={`/editar/${serie.id}`} className="btn">Editar</Link>
           
             {/* Criando uma rota específica para cada serie através do id */}
             <Link to={`/series/${serie.id}`} className="btn">
